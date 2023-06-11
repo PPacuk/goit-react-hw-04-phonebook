@@ -12,7 +12,7 @@ export class App extends Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    filter: [],
+    filter: '',
     name: '',
     number: '',
   };
@@ -24,34 +24,25 @@ export class App extends Component {
       name: this.state.name,
       number: this.state.number,
     };
-    const newContacts = [...this.state.contacts, contactCard];
-    this.setState({ contacts: newContacts, name: '', number: '' });
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, contactCard],
+    }));
+    this.setState({name: '', number: ''})
   };
 
   nameInputHandler = event => {
-    const newValue = event.target.value;
-    this.setState({ name: newValue });
+    this.setState({ name: event.target.value });
   };
 
   numberInputHandler = event => {
-    const newValue = event.target.value;
-    this.setState({ number: newValue });
+    this.setState({ number: event.target.value });
   };
   searchInputHandler = event => {
-    const newValue = event.target.value;
-    this.setState(prev => ({
-      filter: [...prev.contacts].filter(ct =>
-        ct.name.toLocaleLowerCase().includes(newValue.toLocaleLowerCase())
-      ),
-    }));
+    this.setState({ filter: event.target.value });
   };
 
   render() {
     const { contacts, name, number, filter } = this.state;
-    const addContact = event => this.addContact(event);
-    const nameInputHandler = event => this.nameInputHandler(event);
-    const numberInputHandler = event => this.numberInputHandler(event);
-    const searchInputHandler = event => this.searchInputHandler(event);
 
     return (
       <>
@@ -59,16 +50,16 @@ export class App extends Component {
           <PhonebookForm
             name={name}
             number={number}
-            addContact={addContact}
-            nameInputHandler={nameInputHandler}
-            numberInputHandler={numberInputHandler}
+            addContact={this.addContact}
+            nameInputHandler={this.nameInputHandler}
+            numberInputHandler={this.numberInputHandler}
           />
         </Section>
         <Section title="Contacts">
           <SearchBox
             filter={filter}
             contacts={contacts}
-            searchInputHandler={searchInputHandler}
+            searchInputHandler={this.searchInputHandler}
           />
         </Section>
       </>

@@ -6,10 +6,8 @@ export default class SearchBox extends Component {
     return (
       <>
         <p>Find contacts by name</p>
-        <input onChange={this.props.searchInputHandler} />
-        <Contacts contacts={this.props.contacts} />
-        <Contacts contacts={this.props.filter} />
-        
+        <input type="text" onChange={this.props.searchInputHandler} />
+        <Contacts contacts={this.props.contacts} filter={this.props.filter} />
       </>
     );
   }
