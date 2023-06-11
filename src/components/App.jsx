@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import PhonebookForm from './PhonebookForm/PhonebookForm';
+import ContactForm from './ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import Section from './Section/Section';
-import SearchBox from './SearchBox/SearchBox';
+import Filter from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
 
 export class App extends Component {
   state = {
@@ -27,7 +28,7 @@ export class App extends Component {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contactCard],
     }));
-    this.setState({name: '', number: ''})
+    this.setState({ name: '', number: '' });
   };
 
   nameInputHandler = event => {
@@ -47,7 +48,7 @@ export class App extends Component {
     return (
       <>
         <Section title="Phonebook">
-          <PhonebookForm
+          <ContactForm
             name={name}
             number={number}
             addContact={this.addContact}
@@ -56,11 +57,10 @@ export class App extends Component {
           />
         </Section>
         <Section title="Contacts">
-          <SearchBox
-            filter={filter}
-            contacts={contacts}
-            searchInputHandler={this.searchInputHandler}
-          />
+          <>
+            <Filter searchInputHandler={this.searchInputHandler} />
+            <ContactList filter={filter} contacts={contacts} />
+          </>
         </Section>
       </>
     );
