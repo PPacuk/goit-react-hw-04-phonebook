@@ -4,6 +4,7 @@ import Section from './Section/Section';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix';
 
 export class App extends Component {
   state = {
@@ -12,6 +13,7 @@ export class App extends Component {
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      { id: 'id-5', name: 'aaa', number: '227-91-26' },
     ],
     filter: '',
   };
@@ -22,13 +24,23 @@ export class App extends Component {
       name: name,
       number: number,
     };
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, contactCard],
-    }));
+
+    const isOnList = this.state.contacts
+      .map(e => e.name.toLocaleLowerCase())
+      .includes(name.toLocaleLowerCase());
+
+    if (!isOnList) {
+      this.setState(prevState => ({
+        contacts: [...prevState.contacts, contactCard],
+      }));
+      Notify.success(`${name} added to contact list!`);
+    } else {
+      Notify.failure(`${name} is already in contact list!`);
+    }
   };
 
   searchInputHandler = event => {
-    this.setState({ filter: event.target.value });
+    this.setState({ filter: event.currentTarget.value });
   };
 
   render() {
