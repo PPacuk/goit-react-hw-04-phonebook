@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
 import Section from './Section/Section';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
@@ -14,44 +14,31 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  addContact = event => {
-    event.preventDefault();
+  addContact = ({ name, number }) => {
     const contactCard = {
       id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
+      name: name,
+      number: number,
     };
     this.setState(prevState => ({
       contacts: [...prevState.contacts, contactCard],
     }));
-    this.setState({ name: '', number: '' });
   };
 
-  nameInputHandler = event => {
-    this.setState({ name: event.target.value });
-  };
-
-  numberInputHandler = event => {
-    this.setState({ number: event.target.value });
-  };
   searchInputHandler = event => {
     this.setState({ filter: event.target.value });
   };
 
   render() {
-    const { contacts, name, number, filter } = this.state;
+    const { contacts, filter } = this.state;
 
     return (
       <>
         <Section title="Phonebook">
           <ContactForm
-            name={name}
-            number={number}
-            addContact={this.addContact}
+            onAddContact={this.addContact}
             nameInputHandler={this.nameInputHandler}
             numberInputHandler={this.numberInputHandler}
           />
