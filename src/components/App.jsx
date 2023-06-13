@@ -26,7 +26,7 @@ export class App extends Component {
     };
 
     const isOnList = this.state.contacts
-      .map(e => e.name.toLocaleLowerCase())
+      .map(contact => contact.name.toLocaleLowerCase())
       .includes(name.toLocaleLowerCase());
 
     if (!isOnList) {
@@ -39,6 +39,18 @@ export class App extends Component {
     }
   };
 
+  deleteContact = event => {
+    const contactToDelete = this.state.contacts.filter(contact =>
+      contact.id.includes(event.currentTarget.value)
+    );
+    const contactIndex = this.state.contacts.indexOf(...contactToDelete)
+   console.log(contactIndex);
+    
+     this.setState(prevState => ({
+       contacts: [...prevState.contacts.splice(contactIndex,1)],
+     }));
+  };
+
   searchInputHandler = event => {
     this.setState({ filter: event.currentTarget.value });
   };
@@ -49,16 +61,16 @@ export class App extends Component {
     return (
       <>
         <Section title="Phonebook">
-          <ContactForm
-            onAddContact={this.addContact}
-            nameInputHandler={this.nameInputHandler}
-            numberInputHandler={this.numberInputHandler}
-          />
+          <ContactForm onAddContact={this.addContact} />
         </Section>
         <Section title="Contacts">
           <>
             <Filter searchInputHandler={this.searchInputHandler} />
-            <ContactList filter={filter} contacts={contacts} />
+            <ContactList
+              filter={filter}
+              contacts={contacts}
+              deleteContact={this.deleteContact}
+            />
           </>
         </Section>
       </>
