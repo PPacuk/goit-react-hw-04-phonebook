@@ -1,10 +1,13 @@
 import { Component } from 'react';
-import ContactForm from './ContactForm/ContactForm';
-import Section from './Section/Section';
-import Filter from './Filter/Filter';
-import ContactList from './ContactList/ContactList';
+import { PropTypes } from 'prop-types';
 import { nanoid } from 'nanoid';
 import { Notify } from 'notiflix';
+
+import ContactForm from './ContactForm/ContactForm';
+import ContactList from './ContactList/ContactList';
+import Section from './Section/Section';
+import Filter from './Filter/Filter';
+import css from './App.module.css';
 
 export class App extends Component {
   state = {
@@ -44,29 +47,35 @@ export class App extends Component {
     }));
   };
 
-  searchInputHandler = event => {
-    this.setState({ filter: event.currentTarget.value });
+  searchInputHandler = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
   render() {
     const { contacts, filter } = this.state;
+    const { addContact, searchInputHandler, deleteContact } = this;
 
     return (
       <>
         <Section title="Phonebook">
-          <ContactForm onAddContact={this.addContact} />
+          <ContactForm onAddContact={addContact} />
         </Section>
         <Section title="Contacts">
-          <>
-            <Filter searchInputHandler={this.searchInputHandler} />
+          <div className={css.contactsWrapper}>
+            <Filter searchInputHandler={searchInputHandler} />
             <ContactList
               filter={filter}
               contacts={contacts}
-              deleteContact={this.deleteContact}
+              deleteContact={deleteContact}
             />
-          </>
+          </div>
         </Section>
       </>
     );
   }
 }
+
+App.propTypes = {
+  contacts: PropTypes.array,
+  filter: PropTypes.string,
+};

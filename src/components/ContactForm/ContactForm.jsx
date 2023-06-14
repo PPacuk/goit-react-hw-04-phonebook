@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import css from './ContactForm.module.css';
+import { PropTypes } from 'prop-types';
 
 export default class ContactForm extends Component {
   state = {
@@ -7,22 +8,23 @@ export default class ContactForm extends Component {
     number: '',
   };
 
-  handleInputOnChange = event => {
-    const { name, value } = event.currentTarget;
+  handleInputOnChange = e => {
+    const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
+  handleSubmit = e => {
+    e.preventDefault();
     this.props.onAddContact({ ...this.state });
     this.setState({ name: '', number: '' });
   };
 
   render() {
     const { name, number } = this.state;
+    const { handleInputOnChange, handleSubmit } = this;
 
     return (
-      <form className={css.formWrapper} onSubmit={this.handleSubmit}>
+      <form className={css.formWrapper} onSubmit={handleSubmit}>
         <p>Name</p>
         <input
           type="text"
@@ -32,7 +34,7 @@ export default class ContactForm extends Component {
           required
           className={css.formInput}
           value={name}
-          onChange={this.handleInputOnChange}
+          onChange={handleInputOnChange}
         />
 
         <p>Number</p>
@@ -44,7 +46,7 @@ export default class ContactForm extends Component {
           required
           className={css.formInput}
           value={number}
-          onChange={this.handleInputOnChange}
+          onChange={handleInputOnChange}
         />
         <button type="submit" className={css.formBnt}>
           Add contact
@@ -53,3 +55,8 @@ export default class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  name: PropTypes.string,
+  number: PropTypes.string,
+};
