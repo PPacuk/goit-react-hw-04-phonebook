@@ -16,7 +16,7 @@ export default class ContactList extends Component {
           .map(contact => (
             <li className={css.contactsList} key={contact.id}>
               {contact.name} : {contact.number}{' '}
-              <button onClick={deleteContact} value={contact.id}>delete</button>
+              <button onClick={() => deleteContact(contact.id)}>delete</button>
             </li>
           ))}
       </ul>
