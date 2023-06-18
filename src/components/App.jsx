@@ -22,6 +22,9 @@ export class App extends Component {
       number: number,
     };
 
+// test
+
+
     const isOnList = this.state.contacts
       .map(contact => contact.name.toLocaleLowerCase())
       .includes(name.toLocaleLowerCase());
