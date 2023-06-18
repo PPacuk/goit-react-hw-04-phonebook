@@ -11,12 +11,7 @@ import css from './App.module.css';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -36,6 +31,7 @@ export class App extends Component {
         contacts: [...prev.contacts, contactCard],
       }));
       Notify.success(`${name} added to contact list!`);
+      localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
     } else {
       Notify.failure(`${name} is already in contact list!`);
     }
@@ -50,6 +46,19 @@ export class App extends Component {
   searchInputHandler = e => {
     this.setState({ filter: e.currentTarget.value });
   };
+
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem('phonebook') === null)) {
+      localStorage.setItem('phonebook', JSON.stringify([]));
+    }
+    this.setState({
+      contacts: JSON.parse(localStorage.getItem('phonebook')),
+    });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
+  }
 
   render() {
     const { contacts, filter } = this.state;

@@ -33,6 +33,7 @@ export default class ContactForm extends Component {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           className={css.formInput}
+          placeholder='f.e Mateusz Bambik'
           value={name}
           onChange={handleInputOnChange}
         />
@@ -45,6 +46,7 @@ export default class ContactForm extends Component {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           className={css.formInput}
+          placeholder='666 666 666'
           value={number}
           onChange={handleInputOnChange}
         />
