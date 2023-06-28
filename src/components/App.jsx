@@ -10,7 +10,12 @@ import { Filter } from './Filter/Filter';
 import css from './App.module.css';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState([
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ]);
   const [filter, setFilter] = useState('');
 
   const addContact = ({ name, number }) => {
@@ -19,7 +24,7 @@ export const App = () => {
       name: name,
       number: number,
     };
-    console.log(name, number);
+
     const isOnList = contacts
       .map(contact => contact.name.toLocaleLowerCase())
       .includes(name.toLocaleLowerCase());
@@ -27,7 +32,7 @@ export const App = () => {
     if (!isOnList) {
       setContacts(prev => [...prev, contactCard]);
       Notify.success(`${name} added to contact list!`);
-      localStorage.setItem('phonebook', JSON.stringify(contacts));
+      localStorage.setItem('phonebook', JSON.stringify(contactCard));
     } else {
       Notify.failure(`${name} is already in contact list!`);
     }
@@ -42,15 +47,25 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem('phonebook') === null)) {
+    if (!JSON.parse(localStorage.getItem('phonebook'))) {
       localStorage.setItem('phonebook', JSON.stringify([]));
+    } else {
+      setContacts(JSON.parse(localStorage.getItem('phonebook')));
     }
-    setContacts(JSON.parse(localStorage.getItem('phonebook')));
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   if (prev => prev !== contacts) {
+  //     localStorage.setItem('phonebook', JSON.stringify(contacts));
+  //     console.log(contacts);
+  //   }
+  // }, [contacts]);
+
+  const addContactToLocalestore = () => {
+    
     localStorage.setItem('phonebook', JSON.stringify(contacts));
-  },[contacts]);
+    console.log(contacts);
+  };
 
   // componentDidMount() {
   //   if (JSON.parse(localStorage.getItem('phonebook') === null)) {
@@ -68,7 +83,11 @@ export const App = () => {
   return (
     <>
       <Section title="Phonebook">
-        <ContactForm onAddContact={addContact} />
+        <ContactForm
+          onAddContact={addContact}
+          addContactToLocalestore={addContactToLocalestore}
+          contacts={contacts}
+        />
       </Section>
       <Section title="Contacts">
         <div className={css.contactsWrapper}>

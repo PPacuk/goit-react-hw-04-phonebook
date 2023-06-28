@@ -2,7 +2,7 @@ import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { PropTypes } from 'prop-types';
 
-export const ContactForm = ({onAddContact}) => {
+export const ContactForm = ({onAddContact, addContactToLocalestore, contacts}) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -17,6 +17,9 @@ export const ContactForm = ({onAddContact}) => {
   const handleSubmit = e => {
     e.preventDefault();
     onAddContact({ name, number });
+    addContactToLocalestore();
+    
+    
     // this.setState({ name: '', number: '' });
   };
 
@@ -47,7 +50,10 @@ export const ContactForm = ({onAddContact}) => {
         value={number}
         onChange={handleNumberInput}
       />
-      <button type="submit" className={css.formBnt}>
+      <button
+        type="submit"
+        className={css.formBnt}
+      >
         Add contact
       </button>
     </form>
