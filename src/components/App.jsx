@@ -30,9 +30,10 @@ export const App = () => {
       .includes(name.toLocaleLowerCase());
 
     if (!isOnList) {
-      setContacts(prev => [...prev, contactCard]);
+      const newList = [...contacts, contactCard];
+      setContacts(newList);
       Notify.success(`${name} added to contact list!`);
-      localStorage.setItem('phonebook', JSON.stringify(contactCard));
+      localStorage.setItem('phonebook', JSON.stringify(newList));
     } else {
       Notify.failure(`${name} is already in contact list!`);
     }
@@ -61,12 +62,6 @@ export const App = () => {
   //   }
   // }, [contacts]);
 
-  const addContactToLocalestore = () => {
-    
-    localStorage.setItem('phonebook', JSON.stringify(contacts));
-    console.log(contacts);
-  };
-
   // componentDidMount() {
   //   if (JSON.parse(localStorage.getItem('phonebook') === null)) {
   //     localStorage.setItem('phonebook', JSON.stringify([]));
@@ -85,7 +80,6 @@ export const App = () => {
       <Section title="Phonebook">
         <ContactForm
           onAddContact={addContact}
-          addContactToLocalestore={addContactToLocalestore}
           contacts={contacts}
         />
       </Section>

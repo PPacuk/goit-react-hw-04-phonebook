@@ -2,7 +2,7 @@ import { useState } from 'react';
 import css from './ContactForm.module.css';
 import { PropTypes } from 'prop-types';
 
-export const ContactForm = ({onAddContact, addContactToLocalestore, contacts}) => {
+export const ContactForm = ({onAddContact, contacts}) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -17,7 +17,6 @@ export const ContactForm = ({onAddContact, addContactToLocalestore, contacts}) =
   const handleSubmit = e => {
     e.preventDefault();
     onAddContact({ name, number });
-    addContactToLocalestore();
     
     
     // this.setState({ name: '', number: '' });
