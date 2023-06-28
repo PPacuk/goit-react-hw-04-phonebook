@@ -40,7 +40,13 @@ export const App = () => {
   };
 
   const deleteContact = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
+    setContacts(
+      localStorage.setItem(
+        'phonebook',
+        JSON.stringify(contacts.filter(contact => contact.id !== contactId))
+      )
+    );
+    console.log(JSON.stringify(contacts.filter(contact => contact.id !== contactId)));
   };
 
   const searchInputHandler = e => {
@@ -48,8 +54,8 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (!JSON.parse(localStorage.getItem('phonebook'))) {
-      localStorage.setItem('phonebook', JSON.stringify([]));
+    if (JSON.parse(localStorage.getItem('phonebook')) === null) {
+      localStorage.setItem('phonebook', JSON.stringify(contacts));
     } else {
       setContacts(JSON.parse(localStorage.getItem('phonebook')));
     }
@@ -78,10 +84,7 @@ export const App = () => {
   return (
     <>
       <Section title="Phonebook">
-        <ContactForm
-          onAddContact={addContact}
-          contacts={contacts}
-        />
+        <ContactForm onAddContact={addContact} contacts={contacts} />
       </Section>
       <Section title="Contacts">
         <div className={css.contactsWrapper}>
