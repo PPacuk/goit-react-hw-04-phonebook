@@ -55,26 +55,6 @@ export const App = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (prev => prev !== contacts) {
-  //     localStorage.setItem('phonebook', JSON.stringify(contacts));
-  //     console.log(contacts);
-  //   }
-  // }, [contacts]);
-
-  // componentDidMount() {
-  //   if (JSON.parse(localStorage.getItem('phonebook') === null)) {
-  //     localStorage.setItem('phonebook', JSON.stringify([]));
-  //   }
-  //   this.setState({
-  //     contacts: JSON.parse(localStorage.getItem('phonebook')),
-  //   });
-  // }
-
-  // componentDidUpdate() {
-  //   localStorage.setItem('phonebook', JSON.stringify(this.state.contacts));
-  // }
-
   return (
     <>
       <Section title="Phonebook">

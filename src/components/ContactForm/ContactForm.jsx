@@ -17,9 +17,8 @@ export const ContactForm = ({onAddContact, contacts}) => {
   const handleSubmit = e => {
     e.preventDefault();
     onAddContact({ name, number });
-    
-    
-    // this.setState({ name: '', number: '' });
+    setName('')
+    setNumber('')
   };
 
   return (
