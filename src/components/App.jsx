@@ -53,6 +53,7 @@ export const App = () => {
     } else {
       setContacts(JSON.parse(localStorage.getItem('phonebook')));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
